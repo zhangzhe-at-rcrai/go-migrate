@@ -1,7 +1,7 @@
-FROM golang:1.15-alpine3.12 AS builder
+FROM golang:1.16 AS builder
 ARG VERSION
 
-RUN apk add --no-cache git gcc musl-dev make
+# RUN apk add --no-cache git gcc musl-dev make
 
 WORKDIR /go/src/github.com/golang-migrate/migrate
 
@@ -9,7 +9,7 @@ ENV GO111MODULE=on
 
 COPY go.mod go.sum ./
 
-RUN go mod download
+RUN  export GOPROXY=goproxy.cn,direct && go mod download -x
 
 COPY . ./
 
